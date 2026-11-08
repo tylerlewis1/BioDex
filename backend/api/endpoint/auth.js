@@ -18,7 +18,7 @@ router.post('/signup', async (req, res) => {
     }
     //password security
     if(password.length < 8){
-        return res.status("400").json({error: "Password must be at least 8 characters long"});
+        return res.status(400).json({error: "Password must be at least 8 characters long"});
     }
     try {
         //check to see if user already exists
@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
     }
     //check for user in DB
     try {
-        const queryText = 'SELECT * FROM users WHERE username = $1';
+        const queryText = 'SELECT * FROM public.users WHERE username = $1';
         const result = await db.query(queryText, [username]);
         //no username in db
         if(!result || result.rows.length == 0){
@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
         }
         //create JWT
         const token = jwt.sign({ userId: userData.id, username: userData.username }, JWT_SECRET, { expiresIn: '24h' });
-        return res.status(200).json({succsess: true, JWT: token,
+        return res.status(200).json({success: true, JWT: token,
             user: {
                 id: userData.id,
                 username: userData.username,
