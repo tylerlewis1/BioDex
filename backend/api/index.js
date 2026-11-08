@@ -3,6 +3,7 @@ import env from "dotenv";
 
 //endpoints
 import healthEndpoint from './endpoint/health.js';
+import authEndpoint from './endpoint/auth.js';
 
 const app = express();
 env.config({ path: '../.env' });
@@ -12,6 +13,7 @@ app.use(express.json());
 
 //match path to endpoint
 app.use('/health', healthEndpoint);
+app.use('/auth', authEndpoint);
 
 app.listen(PORT, () => {
   console.log(`BiodexAPI server running on port ${PORT}`);

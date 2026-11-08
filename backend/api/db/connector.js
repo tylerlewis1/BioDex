@@ -1,12 +1,11 @@
-import { Pool } from 'pg';
-import env from "dotenv";
+import pkg from 'pg';
+const { Pool } = pkg;
 
-env.config({ path: '../../.env' });
 const pool = new Pool({
   host: "db",
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD, 
-  database: process.env.DB_NAME,   
+  database: "postgres",   
   port: process.env.DB_PORT     
 });
 
