@@ -1,4 +1,7 @@
-**Project Title:** BioDex **Author:** Tyler Lewis **Course:** CS 364 **Date Submitted:** 10/25/2026 
+**Project Title:** BioDex 
+**Author:** Tyler Lewis 
+**Course:** CS 364 
+**Date Submitted:** 10/25/2026 
 
 # **1. Problem Statement** 
 
