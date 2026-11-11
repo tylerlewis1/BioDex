@@ -4,10 +4,10 @@ import verifyToken from '../../middleware/auth.js';
 const router = express.Router();
 
 //get req
-router.get('/', verifyToken, async (req, res) => {
+router.get('/name', verifyToken, async (req, res) => {
     const {search_value} = req.body;
     const searchQuery = `
-                        SELECT s.common_name, s.scientific_name, s.info, b.name
+                        SELECT s.species_id, s.common_name, s.scientific_name, s.info, b.name
                         FROM public.species s JOIN public.biome b
                             ON s.biome = b.biome_id
                         WHERE UPPER(s.common_name) LIKE UPPER($1) OR UPPER(s.scientific_name) LIKE UPPER($1)
@@ -19,6 +19,7 @@ router.get('/', verifyToken, async (req, res) => {
         let data = [];
         for(var i = 0; i < search.rowCount; i++){
             data.push({
+                "species_id": search.rows[i].species_id,
                 "common_name": search.rows[i].common_name,
                 "scientific_name": search.rows[i].scientific_name,
                 "info": search.rows[i].info,
