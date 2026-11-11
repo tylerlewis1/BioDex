@@ -1,11 +1,10 @@
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AuthProvider, useAuth } from "../context/authContext";
-
+import "../../global.css";
 function RootNavigator() {
   const { token, isLoading } = useAuth();
 
-  // Wait until SecureStore finishes checking for a saved JWT
   if (isLoading) return null;
 
   return (
