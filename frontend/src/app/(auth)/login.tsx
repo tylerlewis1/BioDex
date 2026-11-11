@@ -1,14 +1,82 @@
-import {Text, TextInput, View} from "react-native";
-export default function Login() {
-  return (
-    <View className="flex-1 bg-green-900">
-      <View className="felx">
-        <Text className="text-white text-center">Log in</Text>
 
-      </View>
-      <View className="felx-3">
-        <TextInput className="text-white" placeholder="Test input"/>
-      </View>
+import {
+  Text,
+  TextInput,
+  View,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { useAuth } from "../../context/authContext";
+export default function Login() {
+  const { isLoading, saveKey, removeKey } = useAuth();
+
+  return (
+    <View className="flex-1 bg-[#06140d]">
+      {/* Background stuff */}
+      <Image
+        source={require("../../../assets/images/login_bg.png")}
+        resizeMode="cover"
+        className="absolute inset-0 w-full h-full"
+      />
+      <View className="absolute inset-0 bg-black/20" />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        className="flex-1"
+      >
+        <ScrollView
+          contentContainerClassName="flex-grow justify-between"
+          keyboardShouldPersistTaps="handled"
+        >
+          <View className="items-center pt-16">
+            <Image
+              source={require("../../../assets/images/biodex_logo.png")}
+              resizeMode="contain"
+              className="w-auto h-[50%] mt-5"
+            />
+          </View>
+
+          {/* Login form */}
+          <View className="mx-6 mb-12 rounded-[30px] bg-black/60 border border-white/10 p-6">
+            <Text className="text-white text-2xl font-bold mb-2">
+              Welcome Back To Biodex
+            </Text>
+            <Text className="text-white/60 mb-6">
+              Sign in to continue exploring your Biodex.
+            </Text>
+            <TextInput
+              placeholder="Email Address"
+              placeholderTextColor="gray"
+              keyboardType="email-address"
+              className="h-14 rounded-2xl bg-white/10 border border-white/10 px-5 text-white mb-4"
+            />
+            <TextInput
+              placeholder="Password"
+              placeholderTextColor="gray"
+              secureTextEntry
+              className="h-14 rounded-2xl bg-white/10 border border-white/10 px-5 text-white mb-5"
+            />
+            <TouchableOpacity disabled={isLoading} className="h-14 rounded-2xl bg-green-500 items-center justify-center">
+              <Text className="text-[#071509] font-bold text-lg">
+                Sign In
+              </Text>
+            </TouchableOpacity>
+            <View className="flex-row justify-center mt-6">
+              <Text className="text-white/70">
+                Don't have an account?{" "}
+              </Text>
+              <TouchableOpacity disabled={isLoading}>
+                <Text className="text-green-500 font-bold">
+                  Sign Up
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 }
