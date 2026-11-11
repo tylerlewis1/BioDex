@@ -1,5 +1,32 @@
 import { Stack } from "expo-router";
-import "../../global.css";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { AuthProvider, useAuth } from "../context/authContext";
+
+function RootNavigator() {
+  const { token, isLoading } = useAuth();
+
+  // Wait until SecureStore finishes checking for a saved JWT
+  if (isLoading) return null;
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={Boolean(token)}>
+        <Stack.Screen name="(app)" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!token}>
+        <Stack.Screen name="(auth)" />
+      </Stack.Protected>
+    </Stack>
+  );
+}
+
 export default function RootLayout() {
-  return <Stack />;
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <RootNavigator/>
+      </AuthProvider>
+    </GestureHandlerRootView>
+  );
 }
