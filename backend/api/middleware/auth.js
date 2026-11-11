@@ -1,6 +1,4 @@
 import jwt from 'jsonwebtoken';
-import env from 'dotenv';
-env.config({ path: '../../.env' });
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     //if no token in request header
