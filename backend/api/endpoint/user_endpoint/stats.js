@@ -14,7 +14,7 @@ router.get('/', verifyTokenWithID, async (req, res) => {
     }
     
     const countSightingQuery = `
-        SELECT COUNT(*)
+        SELECT COUNT(*), COUNT(DISTINCT s.species_id) as "unique"
         FROM public.sighting s
         WHERE s.created_by = $1
         `;
@@ -22,7 +22,9 @@ router.get('/', verifyTokenWithID, async (req, res) => {
         const search = await db.query(countSightingQuery, [id]);
         
         res.json({
-            total_sightings: search.rows[0].count
+            total_sightings: search.rows[0].count,
+            species_sighted: search.rows[0].unique,
+            total_species: process.env.TOTAL_SPECIES
         }).status(200);
     }catch(error){
         console.error(error);
