@@ -13,8 +13,8 @@ import {useState} from "react";
 import authActions from "./auth_actions";
 import { useAuth } from "../../context/authContext";
 export default function Login() {
-  const {saveKey, removeKey } = useAuth();
-  const { signup } = authActions();
+  const {saveKey } = useAuth();
+  const { signup, login} = authActions();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,13 +23,23 @@ export default function Login() {
   const [screen, setScreen] = useState("login");
   const handleSignup = async() =>{
     setError("");
-    let status = await signup({username, email, password, setIsLoading, saveKey});
+    let status = await signup({username, email, password, setIsLoading});
     if(status.error){
       setError(status.error);
       return;
     } else if(status.success == true){
       alert("Account created!");
       setScreen("login");
+      return;
+    }
+  }
+    const handleLogin = async() =>{
+    setError("");
+    let status = await login({username, password, setIsLoading, saveKey});
+    if(status.error){
+      setError(status.error);
+      return;
+    } else if(status.success == true){
       return;
     }
   }
@@ -72,12 +82,12 @@ export default function Login() {
               <Text className="text-red-500 font-bold">Error: {error}</Text>
             ):(<></>)}
             <TextInput
-              placeholder="Email Address"
+              placeholder="Username"
               placeholderTextColor="gray"
-              value={email}
+              value={username}
               keyboardType="email-address"
               className="h-14 rounded-2xl bg-white/10 border border-white/10 px-5 text-white mb-4"
-              onChangeText={(email) => setEmail(email)}
+              onChangeText={(username) => setUsername(username)}
             />
             <TextInput
               placeholder="Password"
@@ -87,9 +97,9 @@ export default function Login() {
               className="h-14 rounded-2xl bg-white/10 border border-white/10 px-5 text-white mb-5"
               onChangeText={(password) => setPassword(password)}
             />
-            <TouchableOpacity disabled={isLoading} className="h-14 rounded-2xl bg-green-500 items-center justify-center">
+            <TouchableOpacity disabled={isLoading} className="h-14 rounded-2xl bg-green-500 items-center justify-center" onPress={() => handleLogin()}>
               <Text className="text-[#071509] font-bold text-lg">
-                Sign In
+                 Login
               </Text>
             </TouchableOpacity>
             <View className="flex-row justify-center mt-6">
@@ -144,7 +154,7 @@ export default function Login() {
             onPress={() => {handleSignup()}}
             >
               <Text className="text-[#071509] font-bold text-lg">
-                Sign In
+                Sign up
               </Text>
             </TouchableOpacity>
             <View className="flex-row justify-center mt-6">
