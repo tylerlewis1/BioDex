@@ -10,13 +10,30 @@ import {
   TouchableOpacity,
 } from "react-native";
 import {useState} from "react";
+import authActions from "./auth_actions";
 import { useAuth } from "../../context/authContext";
 export default function Login() {
-  const { isLoading, saveKey, removeKey } = useAuth();
+  const {saveKey, removeKey } = useAuth();
+  const { signup } = authActions();
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
   const [screen, setScreen] = useState("login");
+  const handleSignup = async() =>{
+    setError("");
+    let status = await signup({username, email, password, setIsLoading, saveKey});
+    if(status.error){
+      setError(status.error);
+      return;
+    } else if(status.success == true){
+      alert("Account created!");
+      setScreen("login");
+      return;
+    }
+  }
+
   return (
     <View className="flex-1 bg-[#06140d]">
       {/* Background stuff */}
@@ -51,9 +68,13 @@ export default function Login() {
             <Text className="text-white/60 mb-6">
               Sign in to continue exploring your Biodex.
             </Text>
+            {(error != "") ? (
+              <Text className="text-red-500 font-bold">Error: {error}</Text>
+            ):(<></>)}
             <TextInput
               placeholder="Email Address"
               placeholderTextColor="gray"
+              value={email}
               keyboardType="email-address"
               className="h-14 rounded-2xl bg-white/10 border border-white/10 px-5 text-white mb-4"
               onChangeText={(email) => setEmail(email)}
@@ -62,6 +83,7 @@ export default function Login() {
               placeholder="Password"
               placeholderTextColor="gray"
               secureTextEntry
+              value={password}
               className="h-14 rounded-2xl bg-white/10 border border-white/10 px-5 text-white mb-5"
               onChangeText={(password) => setPassword(password)}
             />
@@ -74,7 +96,7 @@ export default function Login() {
               <Text className="text-white/70">
                 Don't have an account?{" "}
               </Text>
-              <TouchableOpacity disabled={isLoading} onPress={() => setScreen("signup")}>
+              <TouchableOpacity disabled={isLoading} onPress={() => {setScreen("signup"); setError("")}}>
                 <Text className="text-green-500 font-bold">
                   Sign Up
                 </Text>
@@ -89,16 +111,20 @@ export default function Login() {
             <Text className="text-white/60 mb-6">
                Sign up to start your Biodex.
             </Text>
+            {(error != "") ? (
+              <Text className="text-red-500 font-bold">Error: {error}</Text>
+            ):(<></>)}
             <TextInput
               placeholder="Username"
               placeholderTextColor="gray"
-              secureTextEntry
+              value={username}
               className="h-14 rounded-2xl bg-white/10 border border-white/10 px-5 text-white mb-5"
               onChangeText={(username) => setUsername(username)}
             />
             <TextInput
               placeholder="Email Address"
               placeholderTextColor="gray"
+              value={email}
               keyboardType="email-address"
               className="h-14 rounded-2xl bg-white/10 border border-white/10 px-5 text-white mb-4"
               onChangeText={(email) => setEmail(email)}
@@ -106,11 +132,17 @@ export default function Login() {
             <TextInput
               placeholder="Password"
               placeholderTextColor="gray"
+              autoCapitalize="none"
               secureTextEntry
+              value={password}
               className="h-14 rounded-2xl bg-white/10 border border-white/10 px-5 text-white mb-5"
               onChangeText={(password) => setPassword(password)}
             />
-            <TouchableOpacity disabled={isLoading} className="h-14 rounded-2xl bg-green-500 items-center justify-center">
+            <TouchableOpacity 
+            disabled={isLoading || username == "" || password == "" || email == ""} 
+            className="h-14 rounded-2xl bg-green-500 items-center justify-center"
+            onPress={() => {handleSignup()}}
+            >
               <Text className="text-[#071509] font-bold text-lg">
                 Sign In
               </Text>
@@ -119,7 +151,7 @@ export default function Login() {
               <Text className="text-white/70">
                Have an account?{" "}
               </Text>
-              <TouchableOpacity disabled={isLoading} onPress={() => setScreen("login")}>
+              <TouchableOpacity disabled={isLoading} onPress={() => {setScreen("login"); setError("")}}>
                 <Text className="text-green-500 font-bold">
                   Login
                 </Text>
@@ -129,6 +161,9 @@ export default function Login() {
           )}
         </ScrollView>
       </KeyboardAvoidingView>
+      {isLoading? (
+      <View className="absolute inset-0 bg-black/50" />
+      ): (<></>)}
     </View>
   );
 }
