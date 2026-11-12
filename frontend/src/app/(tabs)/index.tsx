@@ -1,4 +1,5 @@
 import {Text, View, TouchableOpacity} from "react-native";
+
 import { useAuth } from "@/context/authContext";
 export default function Home(){
     const {removeKey} = useAuth();
@@ -6,7 +7,7 @@ export default function Home(){
         <View className="felx-1 pt-20">
             <Text>Home page</Text>
             <TouchableOpacity
-            onPress={removeKey}
+            onPress={() =>removeKey()}
             >
                 <Text>Logout</Text>
             </TouchableOpacity>

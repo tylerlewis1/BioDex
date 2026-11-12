@@ -4,13 +4,12 @@ import { AuthProvider, useAuth } from "../context/authContext";
 import "../../global.css";
 function RootNavigator() {
   const { token, isLoading } = useAuth();
-
   if (isLoading) return null;
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Protected guard={Boolean(token)}>
-        <Stack.Screen name="(app)" />
+        <Stack.Screen name="(tabs)" />
       </Stack.Protected>
 
       <Stack.Protected guard={!token}>
