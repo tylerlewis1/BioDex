@@ -69,7 +69,7 @@ export default function authActions(){
             if(resJson.success == true){
                 input.setIsLoading(false);
                 input.saveKey(resJson.JWT);
-                return ({success: true, data: resJson.id});
+                return ({success: true, data: resJson});
             }
         } catch (error){
             console.log(error);

@@ -12,8 +12,10 @@ import {
 import {useState} from "react";
 import authActions from "./auth_actions";
 import { useAuth } from "../../context/authContext";
+import { useUser } from "@/context/userContext";
 export default function Login() {
-  const {saveKey } = useAuth();
+  const {saveKey} = useAuth();
+  const {setUser} = useUser();
   const { signup, login} = authActions();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -40,6 +42,10 @@ export default function Login() {
       setError(status.error);
       return;
     } else if(status.success == true){
+      setUser({
+        username: status.data.user.username,
+        email: status.data.user.email
+      });
       return;
     }
   }

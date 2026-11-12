@@ -1,17 +1,22 @@
-import {Text, View, TouchableOpacity} from "react-native";
+import {Text, View, TouchableOpacity, ScrollView} from "react-native";
 
 import { useAuth } from "@/context/authContext";
+import { useUser } from "@/context/userContext";
 export default function Home(){
     const {removeKey} = useAuth();
+    const {username, email} = useUser();
+    // removeKey();
+    console.log("username: ", username);
     return(
-        <View className="felx-1 pt-20">
-            <Text>Home page</Text>
-            <TouchableOpacity
-            onPress={() =>removeKey()}
-            >
-                <Text>Logout</Text>
-            </TouchableOpacity>
+        <View className="flex-1 bg-[#021800]">
+            <ScrollView>
+                {/* Greating */}
+                <View className="bg-red-500">
+                    <Text>Hello {username}</Text>
+                </View>
 
+                
+            </ScrollView>
         </View>
     )
 }
