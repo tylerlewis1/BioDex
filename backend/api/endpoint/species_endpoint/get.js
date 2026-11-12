@@ -4,7 +4,7 @@ import verifyToken from '../../middleware/auth.js';
 const router = express.Router();
 
 //get list of species sorted by common name
-router.get('/', verifyToken, async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     const {limit, offset} = req.body;
     if(limit > 100){
         return res.send({error: "Max limit of 100"}).status(400);
@@ -42,7 +42,7 @@ router.get('/', verifyToken, async (req, res) => {
 });
 
 //get list of species by biome sorted by common name
-router.get('/biome', verifyToken, async (req, res) => {
+router.post('/biome', verifyToken, async (req, res) => {
     const {limit, offset, biome_id} = req.body;
     if(biome_id == null){
         return res.send({error: "biome_id is required"}).status(400);

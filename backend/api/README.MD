@@ -104,3 +104,52 @@ Validates plain-text credentials against stored database hashes and sends back a
 ```
 
 ---
+### Search by Species Name
+Searches for species by name sends back species sorted alphabetically by common name.
+
+* **Endpoint:** `POST /species/search/name`
+* **Authentication:** Required
+* **Payload Request Body:**
+```json
+{
+  "search_value": "boxfish",
+}
+```
+* **Success Response (`200 OK`):**
+```json
+[
+    {
+        "species_id": 4807211,
+        "common_name": "Black-banded Pygmy Boxfish",
+        "scientific_name": "Capropygia unistriata",
+        "info": "{species of fish}",
+        "biome": "Marine"
+    }
+]
+```
+
+---
+### Search Species by ID
+Searches for species by ID.
+
+* **Endpoint:** `POST /species/search/id`
+* **Authentication:** Required
+* **Payload Request Body:**
+```json
+{
+  "search_value": 4807211,
+}
+```
+* **Success Response (`200 OK`):**
+```json
+
+    {
+      "species_id": 4807211,
+      "common_name": "Black-banded Pygmy Boxfish",
+      "scientific_name": "Capropygia unistriata",
+      "info": "{species of fish}",
+      "biome": "Marine"
+  }
+```
+
+---

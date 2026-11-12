@@ -4,7 +4,7 @@ import verifyToken from '../../middleware/auth.js';
 const router = express.Router();
 
 //search by name
-router.get('/name', verifyToken, async (req, res) => {
+router.post('/name', verifyToken, async (req, res) => {
     const {search_value} = req.body;
     const searchQuery = `
                         SELECT s.species_id, s.common_name, s.scientific_name, s.info, b.name
@@ -33,7 +33,7 @@ router.get('/name', verifyToken, async (req, res) => {
     }
 });
 //search by ID
-router.get('/id', verifyToken, async (req, res) => {
+router.post('/id', verifyToken, async (req, res) => {
     const {search_value} = req.body;
     const searchQuery = `
                         SELECT s.species_id, s.common_name, s.scientific_name, s.info, b.name
