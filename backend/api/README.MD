@@ -151,5 +151,88 @@ Searches for species by ID.
       "biome": "Marine"
   }
 ```
+---
+### Get Species
+Gets species alphabetically by common name. Max limit 100
+
+* **Endpoint:** `POST /species/get`
+* **Authentication:** Required
+* **Payload Request Body:**
+```json
+{
+  "limit": 2,
+  "offset": 20
+}
+```
+* **Success Response (`200 OK`):**
+```json
+[
+    {
+        "species_id": 4882899,
+        "common_name": "19-spot Ladybird",
+        "scientific_name": "Anisosticta novemdecimpunctata",
+        "info": "{Anisosticta novemdecimpunctata, known as the water ladybird, is a species of beetle in family Coccinellidae. It is found in the Palearctic.}",
+        "biome": "Temperate Broadleaf & Mixed Forests"
+    },
+    {
+        "species_id": 4967278,
+        "common_name": "20-spotted Ladybird Beetle",
+        "scientific_name": "Psyllobora vigintimaculata",
+        "info": "{Psyllobora vigintimaculata, the twenty-spotted lady beetle, is a species of lady beetle in the family Coccinellidae. It is found in North America, where it has been recorded from Newfoundland to Alaska in the north and from Virginia to Tennessee and Louisiana, west to southern California.}",
+        "biome": "Temperate Broadleaf & Mixed Forests"
+    }
+]
+```
+
+---
+### Get Species by Biome
+Gets species sorted by biome
+
+* **Endpoint:** `POST /species/get`
+* **Authentication:** Required
+* **Payload Request Body:**
+```json
+{
+  "limit": 2,
+  "offset": 20,
+  "biome_id": 17
+}
+```
+* **Success Response (`200 OK`):**
+```json
+[
+   
+    {
+        "species_id": 3567708,
+        "common_name": "Acoupa weakfish",
+        "scientific_name": "Cynoscion acoupa",
+        "info": "{Cynoscion acoupa, the acoupa weakfish, blacktail basher or grey snapper, is a species of marine ray-finned fish belonging to the family Sciaenidae, the drums and croakers. This fish is found in the western Atlantic.}",
+        "biome": "Freshwater"
+    },
+    {
+        "species_id": 4443593,
+        "common_name": "Acre corydoras",
+        "scientific_name": "Corydoras acrensis",
+        "info": "{species of fish}",
+        "biome": "Freshwater"
+    }
+
+]
+```
+
+---
+### Get User Stats
+Gets species sorted by biome
+
+* **Endpoint:** `GET /user/stats/:id`
+* **Authentication:** Required
+* **Success Response (`200 OK`):**
+```json
+{
+    "total_sightings": "2",
+    "species_sighted": "1",
+    "total_species": "1658193"
+}
+```
 
 ---
