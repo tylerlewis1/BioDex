@@ -236,7 +236,7 @@ Gets species sorted by biome
 ```
 ---
 ### Get Biomes
-Returns a list of all the biomes int the db.
+Returns a list of all the biomes in the db.
 
 * **Endpoint:** `GET /biome/list`
 * **Authentication:** Required
@@ -254,7 +254,7 @@ Returns a list of all the biomes int the db.
         "name": "Tropical & Subtropical Moist Broadleaf Forests",
         "countries": null,
         "image_url": null
-    }, ...
+    },
 ]
 ```
 ---
