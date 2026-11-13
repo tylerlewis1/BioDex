@@ -234,5 +234,27 @@ Gets species sorted by biome
     "total_species": "1658193"
 }
 ```
+---
+### Get Biomes
+Returns a list of all the biomes int the db.
 
+* **Endpoint:** `GET /biome/list`
+* **Authentication:** Required
+* **Success Response (`200 OK`):**
+```json
+[
+    {
+        "biome_id": 0,
+        "name": "Unknown",
+        "countries": null,
+        "image_url": null
+    },
+    {
+        "biome_id": 1,
+        "name": "Tropical & Subtropical Moist Broadleaf Forests",
+        "countries": null,
+        "image_url": null
+    }, ...
+]
+```
 ---
