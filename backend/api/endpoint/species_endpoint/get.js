@@ -16,12 +16,12 @@ router.post('/', verifyToken, async (req, res) => {
         offset = 0;
     }
     const searchQuery = `
-                        SELECT s.species_id, s.common_name, s.scientific_name, s.info, b.name
-                        FROM public.species s JOIN public.biome b
-                            ON s.biome = b.biome_id
-                        ORDER BY common_name ASC
-                        LIMIT $1 OFFSET $2
-                        `;
+        SELECT s.species_id, s.common_name, s.scientific_name, s.info, b.name
+        FROM public.species s JOIN public.biome b
+            ON s.biome = b.biome_id
+        ORDER BY common_name ASC
+        LIMIT $1 OFFSET $2
+        `;
     try{
         const search = await db.query(searchQuery, [limit, offset]);
         let data = [];
@@ -57,13 +57,13 @@ router.post('/biome', verifyToken, async (req, res) => {
         offset = 0;
     }
     const searchQuery = `
-                        SELECT s.species_id, s.common_name, s.scientific_name, s.info, b.name
-                        FROM public.species s JOIN public.biome b
-                            ON s.biome = b.biome_id
-                        WHERE s.biome = $3
-                        ORDER BY common_name ASC
-                        LIMIT $1 OFFSET $2
-                        `;
+        SELECT s.species_id, s.common_name, s.scientific_name, s.info, b.name
+        FROM public.species s JOIN public.biome b
+            ON s.biome = b.biome_id
+        WHERE s.biome = $3
+        ORDER BY common_name ASC
+        LIMIT $1 OFFSET $2
+        `;
     try{
         const search = await db.query(searchQuery, [limit, offset, biome_id]);
         let data = [];

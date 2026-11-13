@@ -9,6 +9,8 @@ import searchEndpoint from './endpoint/species_endpoint/search.js';
 import getSpeciesEndpoint from './endpoint/species_endpoint/get.js';
 //user endpoints
 import getStatsEndpoint from './endpoint/user_endpoint/stats.js';
+//biome endpoints
+import getBiomeEndpoints from "./endpoint/biome_endpoint/get.js";
 const app = express();
 env.config({ path: '../.env' });
 const PORT = process.env.API_PORT || 3000;
@@ -23,6 +25,8 @@ app.use('/species/search', searchEndpoint);
 app.use('/species/get', getSpeciesEndpoint);
 //user endpoints
 app.use('/user/stats', getStatsEndpoint);
+//biome endpoints
+app.use('/biome', getBiomeEndpoints);
 app.listen(PORT, () => {
   console.log(`BiodexAPI server running on port ${PORT}`);
 });

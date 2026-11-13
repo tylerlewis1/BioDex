@@ -1,10 +1,10 @@
 import express from 'express';
 import {db} from '../../db/connector.js';
-import verifyTokenWithID from '../../middleware/auth.js';
+import verifyToken from '../../middleware/auth.js';
 const router = express.Router();
 
 //get list of species sorted by common name
-router.get('/:id', verifyTokenWithID, async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
     const { id } = req.params;
     if(!id || !req.user){
         return res.status(400).json({error: "User ID and JWT are required"});
