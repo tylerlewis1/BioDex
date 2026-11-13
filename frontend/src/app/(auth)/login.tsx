@@ -44,7 +44,8 @@ export default function Login() {
     } else if(status.success == true){
       setUser({
         username: status.data.user.username,
-        email: status.data.user.email
+        email: status.data.user.email,
+        id: status.data.user.id
       });
       return;
     }

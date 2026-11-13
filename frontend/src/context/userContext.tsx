@@ -4,11 +4,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 type setUserInput = {
   username: string;
   email: string;
+  id: string;
 };
 
 type userContextType = {
   username: string | null;
   email: string | null;
+  id: string | null;
   isLoading: boolean;
   setUser: (input: setUserInput) => Promise<void>;
   removeUser: () => Promise<void>;
@@ -18,6 +20,7 @@ const userContext = createContext<userContextType>({
   username: null,
   email: null,
   isLoading: true,
+  id: null,
   setUser: async () => {},
   removeUser: async () => {},
 });
@@ -27,6 +30,7 @@ const USER_STORAGE_KEY = "user_metadata";
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -37,6 +41,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
           const parsed: setUserInput = JSON.parse(storedUser);
           setUsername(parsed.username);
           setEmail(parsed.email);
+          setId(parsed.id);
         }
       } catch (error) {
         console.error("Failed to load user from storage:", error);
@@ -52,6 +57,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(input));
       setEmail(input.email);
       setUsername(input.username);
+      setId(input.id);
     } catch (error) {
       console.error("Failed to save user to storage:", error);
     }
@@ -62,13 +68,14 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       await AsyncStorage.removeItem(USER_STORAGE_KEY);
       setEmail("");
       setUsername("");
+      setId("");
     } catch (error) {
       console.error("Failed to remove user from storage:", error);
     }
   };
 
   return (
-    <userContext.Provider value={{ username, email, isLoading, setUser, removeUser }}>
+    <userContext.Provider value={{ username, id, email, isLoading, setUser, removeUser }}>
       {children}
     </userContext.Provider>
   );
