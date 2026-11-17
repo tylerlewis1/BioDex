@@ -3,22 +3,28 @@ import { useState, useEffect } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context"; 
 import { useUser } from "@/context/userContext";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { getStats } from "../server_actions/actions";
+import { getBiomes, getStats } from "../server_actions/actions";
 import { useAuth } from "@/context/authContext";
+import BiomeCard from "@/comps/biome_card"
 export default function Home(){
     const totalSpecies = 1658193;
     const insets = useSafeAreaInsets();
     const {token, removeKey} = useAuth();
     const {username, email, id} = useUser();
     const [sigtings, setSightings] = useState(0);
+    const [biomes, setBiomes] = useState([]);
    useEffect(() => {
     let isActive = true;
     const fetchStats = async () => {
         if (!token || !id) return;
         try {
             const stats = await getStats(token, id);
+            const biomes = await getBiomes(token);
             if (isActive && stats !== undefined) {
                 setSightings(stats.species_sighted);
+            }
+            if (isActive && biomes !== undefined) {
+                setBiomes(biomes);
             }
         } catch (error) {
             if (isActive) {
@@ -35,15 +41,14 @@ export default function Home(){
         <View className="flex-1 bg-[#010a00]"
             style={{
                 paddingTop: insets.top,
-                paddingBottom: insets.bottom,
             }}
         >
             <View className="px-[10%]">
                <Image source={require("../../../assets/images/text_logo.png")} className="w-[50%] h-[50px] m-auto"/>
             </View>
             <ScrollView className="flex-1 p-4">
-            <View className="bg-green-950/70 w-[95%] m-5 p-3 m-auto rounded-3xl">
-                <View className="felx flex-row justify-between gap-[3em] py-2">
+            <View className="bg-green-950/70 w-[100%] m-5 p-3 m-auto rounded-3xl">
+                <View className="felx flex-row justifyr-between gap-[3em] py-2">
                     <View className="w-[65%]">
                         <Text className="text-white font-medium py-2">Your Biodex</Text>
                         <Text className="text-white font-bold text-4xl py-2">{sigtings.toLocaleString()}<Text className="text-lg text-white/70"> / {totalSpecies.toLocaleString()}</Text></Text>
@@ -60,9 +65,18 @@ export default function Home(){
                     <Text className="text-white mx-auto font-semibold">{Math.round((sigtings/totalSpecies) * 100)}%</Text>
                 </View>
             </View>
-
-                
+                <View className="flex-row flex-wrap justify-between overflow-hidden gap-2 pt-5">
+                    {biomes.map((b: {biome_id: number, name: string, countries: string[]}) => (
+                        <BiomeCard 
+                        id={b.biome_id}
+                        name={b.name}
+                        countries={b.countries}
+                        key={b.biome_id}
+                        />
+                    ))}
+                </View>
             </ScrollView>
         </View >
     )
 }
+
