@@ -20,7 +20,7 @@ router.get('/list', verifyToken, async (req, res) => {
                 image_url: search.rows[i].image_url
             })
         }
-        res.json(data).status(200);
+        res.status(200).json(data);
     }catch(error){
         console.error(error);
         res.status(500).send({error: "Server error"});

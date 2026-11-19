@@ -21,11 +21,11 @@ router.get('/:id', verifyToken, async (req, res) => {
     try{
         const search = await db.query(countSightingQuery, [id]);
         
-        res.json({
+        res.status(200).json({
             total_sightings: search.rows[0].count,
             species_sighted: search.rows[0].unique,
             total_species: process.env.TOTAL_SPECIES
-        }).status(200);
+        });
     }catch(error){
         console.error(error);
         res.status(500).send({error: "Server error"});

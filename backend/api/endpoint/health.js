@@ -5,7 +5,7 @@ const router = express.Router();
 //get req
 router.get('/', async (req, res) => {
     const isDBRunning = await db.checkStatus;
-    res.send(`Server up\n DB running: ${isDBRunning}`).status(200);
+    res.status(200).send(`Server up\n DB running: ${isDBRunning}`);
 });
 
 export default router;

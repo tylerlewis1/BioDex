@@ -8,7 +8,7 @@ env.config({ path: '../../.env' });
 
 const router = express.Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'default_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/signup', async (req, res) => {
     const {username, password, email} = req.body;
