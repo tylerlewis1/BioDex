@@ -14,7 +14,7 @@ type Response = {
     data: JSON| null; 
     error?: ErrorResponse | null;
 };
-export async function apiFetch(path: string, options: Options = {}): Promise<Response> {
+export async function apiFetch(path: string, options: Options): Promise<Response> {
     const headers: Record<string, string> = { "Content-Type": "application/json" }
     
     if (options.auth) {
