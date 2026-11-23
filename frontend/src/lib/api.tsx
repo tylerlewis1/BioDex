@@ -10,11 +10,11 @@ type ErrorResponse = {
     code: number;
     msg: string;
 }
-type Response = { 
-    data: JSON| null; 
-    error?: ErrorResponse | null;
+type Response<T> = { 
+    data: T | null; 
+    error: ErrorResponse | null;
 };
-export async function apiFetch(path: string, options: Options): Promise<Response> {
+export async function apiFetch<T>(path: string, options: Options): Promise<Response<T>> {
     const headers: Record<string, string> = { "Content-Type": "application/json" }
     
     if (options.auth) {
@@ -22,16 +22,19 @@ export async function apiFetch(path: string, options: Options): Promise<Response
         if (token) headers.Authorization = `Bearer ${token}`;
         else return { data: null, error: { code: 401, msg: "Unauthorized" } };
     }
-
-    const res = await fetch(`${baseUrl}${path}`, {
-        method: options.method,
-        headers,
-        body: options.body ? JSON.stringify(options.body) : null,
-    });
-    
-    const data = await res.json().catch(() => null)
-    
-    if (!res.ok) return { data: null, error: { code: res.status, msg: data.error?  data.error : "There was an error"} }
-    
-    return {data: data};
+    try {
+        const res = await fetch(`${baseUrl}${path}`, {
+            method: options.method,
+            headers,
+            body: options.body ? JSON.stringify(options.body) : null,
+        });
+        
+        const data = await res.json().catch(() => null);
+        
+        if (!res.ok) return { data: null, error: { code: res.status, msg: data.error?  data.error : "There was an error"} }
+        
+        return {data: data, error: null };
+    } catch (error){
+        return {data: null, error: { code: 0, msg: "Network error" }};
+    }
 }
