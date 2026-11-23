@@ -8,33 +8,31 @@ type BiomeCardProps = {
     onPress?: () => void;
 };
 
-const imagesrc: Record<number, any> = {
-    17: require('@/assets/biome_thumbnails/1.png'),
-    0: require('@/assets/biome_thumbnails/2.png'),
-    16: require('@/assets/biome_thumbnails/3.png'),
-    15: require('@/assets/biome_thumbnails/4.png'),
-    14: require('@/assets/biome_thumbnails/5.png'),
-    13: require('@/assets/biome_thumbnails/6.png'),
-    12: require('@/assets/biome_thumbnails/7.png'),
-    11: require('@/assets/biome_thumbnails/8.png'),
-    10: require('@/assets/biome_thumbnails/9.png'),
-    9: require('@/assets/biome_thumbnails/10.png'),
-    8: require('@/assets/biome_thumbnails/11.png'),
-    7: require('@/assets/biome_thumbnails/12.png'),
-    6: require('@/assets/biome_thumbnails/13.png'),
-    5: require('@/assets/biome_thumbnails/14.png'),
-    4: require('@/assets/biome_thumbnails/15.png'),
-    3: require('@/assets/biome_thumbnails/16.png'),
-    2: require('@/assets/biome_thumbnails/17.png'),
-    1: require('@/assets/biome_thumbnails/18.png'),
-};
+const imagesrc = [
+    require('@/assets/wildlife_thumbnails/0.png'),
+    require('@/assets/wildlife_thumbnails/1.png'),
+    require('@/assets/wildlife_thumbnails/2.png'),
+    require('@/assets/wildlife_thumbnails/3.png'),
+    require('@/assets/wildlife_thumbnails/4.png'),
+    require('@/assets/wildlife_thumbnails/5.png'),
+    require('@/assets/wildlife_thumbnails/6.png'),
+    require('@/assets/wildlife_thumbnails/7.png'),
+    require('@/assets/wildlife_thumbnails/8.png'),
+    require('@/assets/wildlife_thumbnails/9.png'),
+    require('@/assets/wildlife_thumbnails/10.png'),
+    require('@/assets/wildlife_thumbnails/11.png'),
+    require('@/assets/wildlife_thumbnails/12.png'),
+    require('@/assets/wildlife_thumbnails/13.png'),
+    require('@/assets/wildlife_thumbnails/14.png'),
+    require('@/assets/wildlife_thumbnails/15.png'),
+];
 
-export default function BiomeCard({
+export default function AnimalCard({
     id,
     name,
     onPress,
 }: BiomeCardProps) {
-    const image = imagesrc[id];
+    const image = imagesrc[id - 1];
 
     return (
         <Pressable

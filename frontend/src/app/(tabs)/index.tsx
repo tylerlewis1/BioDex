@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context"; 
 import { useUser } from "@/context/userContext";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { getBiomes, getStats } from "../server_actions/actions";
+import { getBiomes, getStats, getAnimalTypes } from "../server_actions/actions";
 import { useAuth } from "@/context/authContext";
 import BiomeCard from "@/comps/biome_card"
 export default function Home(){
@@ -13,6 +13,7 @@ export default function Home(){
     const {username, email, id} = useUser();
     const [sigtings, setSightings] = useState(0);
     const [biomes, setBiomes] = useState([]);
+    const [animalTypes, setAnimalTypes] = useState([]);
    useEffect(() => {
     let isActive = true;
     const fetchStats = async () => {
@@ -20,11 +21,15 @@ export default function Home(){
         try {
             const stats = await getStats(token, id);
             const biomes = await getBiomes(token);
+            const animalTypes = await getAnimalTypes(token);
             if (isActive && stats !== undefined) {
                 setSightings(stats.species_sighted);
             }
             if (isActive && biomes !== undefined) {
                 setBiomes(biomes);
+            }
+            if (isActive && animalTypes !== undefined) {
+                setAnimalTypes(animalTypes);
             }
         } catch (error) {
             if (isActive) {
@@ -66,12 +71,12 @@ export default function Home(){
                 </View>
             </View>
                 <View className="flex-row flex-wrap justify-between overflow-hidden gap-2 pt-5">
-                    {biomes.map((b: {biome_id: number, name: string, countries: string[]}) => (
+                    {animalTypes.map((at: {animal_type_id: number, type_name: string}) => (
                         <BiomeCard 
-                        id={b.biome_id}
-                        name={b.name}
-                        countries={b.countries}
-                        key={b.biome_id}
+                        id={at.animal_type_id}
+                        name={at.type_name}
+                        countries={[]}
+                        key={at.animal_type_id}
                         />
                     ))}
                 </View>
